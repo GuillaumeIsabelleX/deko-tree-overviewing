@@ -1,5 +1,8 @@
 
 
+# v0.0.116 - 2019-01-07
+- Added Tags
+
 
 # v0.0.115 - 2019-01-07
 - Added Tags, Own icons
