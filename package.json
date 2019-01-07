@@ -1,21 +1,20 @@
 {
-    "name": "todo-tree",
-    "displayName": "Todo Tree",
-    "description": "Show TODO, FIXME, etc. comment tags in a tree view",
+    "name": "deko-tree-overviewing",
+    "displayName": "STC Deko Tree Overviewer",
+    "description": "Show STC comment decorator, etc. comment tags in a tree view",
     "keywords": [
-        "@v",
-        "todo",
-        "task",
-        "tasklist",
-        "multi-root ready"
+        "deko",
+        "action",
+        "overview",
+        "stc"
     ],
-    "version": "0.0.112",
-    "icon": "resources/todo-tree.png",
-    "publisher": "Gruntfuggly",
+    "version": "0.0.115",
+    "icon": "resources/stc-deko-icon.png",
+    "publisher": "guillaumeisabelle",
     "engines": {
         "vscode": "^1.5.0"
     },
-    "repository": "https://github.com/Gruntfuggly/todo-tree",
+    "repository": "https://github.com/GuillaumeIsabelleX/deko-tree-overviewing",
     "scripts": {
         "test": "qunit -c utils.js -t test/tests.js"
     },
@@ -31,7 +30,7 @@
             "activitybar": [
                 {
                     "id": "todo-tree-container",
-                    "title": "TODOs",
+                    "title": "DEKOs",
                     "icon": "resources/todo-tree-container.svg"
                 }
             ]
@@ -40,14 +39,14 @@
             "explorer": [
                 {
                     "id": "todo-tree-view-explorer",
-                    "name": "TODOs",
+                    "name": "DEKOs",
                     "when": "todo-tree-has-content && todo-tree-in-explorer"
                 }
             ],
             "todo-tree-container": [
                 {
                     "id": "todo-tree-view",
-                    "name": "TODOs"
+                    "name": "DEKOs"
                 }
             ]
         },
@@ -109,7 +108,7 @@
             {
                 "command": "todo-tree.showFlatView",
                 "title": "Show Flat View",
-                "category": "Todo Tree",
+                "category": "Deko Tree",
                 "icon": {
                     "dark": "resources/icons/dark/flat.svg",
                     "light": "resources/icons/light/flat.svg"
@@ -118,7 +117,7 @@
             {
                 "command": "todo-tree.showTagsOnlyView",
                 "title": "Show Tags Only View",
-                "category": "Todo Tree",
+                "category": "Deko Tree",
                 "icon": {
                     "dark": "resources/icons/dark/tags.svg",
                     "light": "resources/icons/light/tags.svg"
@@ -127,7 +126,7 @@
             {
                 "command": "todo-tree.showTreeView",
                 "title": "Show Tree View",
-                "category": "Todo Tree",
+                "category": "Deko Tree",
                 "icon": {
                     "dark": "resources/icons/dark/tree.svg",
                     "light": "resources/icons/light/tree.svg"
@@ -136,7 +135,7 @@
             {
                 "command": "todo-tree.refresh",
                 "title": "Refresh",
-                "category": "Todo Tree",
+                "category": "Deko Tree",
                 "icon": {
                     "dark": "resources/icons/dark/refresh.svg",
                     "light": "resources/icons/light/refresh.svg"
@@ -145,7 +144,7 @@
             {
                 "command": "todo-tree.expand",
                 "title": "Expand Tree",
-                "category": "Todo Tree",
+                "category": "Deko Tree",
                 "icon": {
                     "dark": "resources/icons/dark/expand.svg",
                     "light": "resources/icons/light/expand.svg"
@@ -154,7 +153,7 @@
             {
                 "command": "todo-tree.collapse",
                 "title": "Collapse Tree",
-                "category": "Todo Tree",
+                "category": "Deko Tree",
                 "icon": {
                     "dark": "resources/icons/dark/collapse.svg",
                     "light": "resources/icons/light/collapse.svg"
@@ -163,7 +162,7 @@
             {
                 "command": "todo-tree.filter",
                 "title": "Filter Tree",
-                "category": "Todo Tree",
+                "category": "Deko Tree",
                 "icon": {
                     "dark": "resources/icons/dark/filter.svg",
                     "light": "resources/icons/light/filter.svg"
@@ -172,7 +171,7 @@
             {
                 "command": "todo-tree.filterClear",
                 "title": "Clear Filter",
-                "category": "Todo Tree",
+                "category": "Deko Tree",
                 "icon": {
                     "dark": "resources/icons/dark/clear-filter.svg",
                     "light": "resources/icons/light/clear-filter.svg"
@@ -181,7 +180,7 @@
             {
                 "command": "todo-tree.groupByTag",
                 "title": "Group by Tag",
-                "category": "Todo Tree",
+                "category": "Deko Tree",
                 "icon": {
                     "dark": "resources/icons/dark/tag.svg",
                     "light": "resources/icons/light/tag.svg"
@@ -190,7 +189,7 @@
             {
                 "command": "todo-tree.ungroupByTag",
                 "title": "Ungroup by Tag",
-                "category": "Todo Tree",
+                "category": "Deko Tree",
                 "icon": {
                     "dark": "resources/icons/dark/notag.svg",
                     "light": "resources/icons/light/notag.svg"
@@ -199,22 +198,22 @@
             {
                 "command": "todo-tree.addTag",
                 "title": "Add Tag",
-                "category": "Todo Tree"
+                "category": "Deko Tree"
             },
             {
                 "command": "todo-tree.removeTag",
                 "title": "Remove Tag",
-                "category": "Todo Tree"
+                "category": "Deko Tree"
             },
             {
                 "command": "todo-tree.toggleStatusBar",
                 "title": "Toggle Status Indication Type",
-                "category": "Todo Tree"
+                "category": "Deko Tree"
             }
         ],
         "configuration": {
             "type": "object",
-            "title": "Todo Tree",
+            "title": "Deko Tree",
             "properties": {
                 "todo-tree.regex": {
                     "type": "string",
@@ -224,8 +223,11 @@
                 "todo-tree.tags": {
                     "type": "array",
                     "default": [
-                        "TODO",
-                        "FIXME"
+                        "@v",
+                        "@mc",
+                        "@a",
+                        "@startmc",
+                        "@startuml"
                     ],
                     "markdownDescription": "List of tags"
                 },
@@ -388,7 +390,8 @@
         "comment-patterns": "^0.10.1",
         "micromatch": "^3.1.10",
         "minimatch": "^3.0.4",
-        "octicons": "^7.4.0"
+        "octicons": "^7.4.0",
+        "vscode": "^1.1.26"
     },
     "devDependencies": {
         "node-qunit": "^1.0.0",
