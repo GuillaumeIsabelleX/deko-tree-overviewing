@@ -30,7 +30,8 @@ function activate( context )
     var status = vscode.window.createStatusBarItem( vscode.StatusBarAlignment.Left, 0 );
 
     var todoTreeViewExplorer = vscode.window.createTreeView( "todo-tree-view-explorer", { treeDataProvider: provider } );
-    var todoTreeView = vscode.window.createTreeView( "todo-tree-view", { treeDataProvider: provider } );
+    var todoTreeView = vscode.window.createTreeView( "todo-tree-view", { treeDataProvider: provider } ); //@v Create a Tree from the tree data provider
+    //@o There is a treeDataProvider
 
     var outputChannel;
 
