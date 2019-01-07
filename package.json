@@ -227,7 +227,11 @@
                         "@mc",
                         "@a",
                         "@startmc",
-                        "@startuml"
+                        "@startuml",
+                        "@bug",
+                        "@i",
+                        "@s",
+                        "@stcgoal"
                     ],
                     "markdownDescription": "List of tags"
                 },
