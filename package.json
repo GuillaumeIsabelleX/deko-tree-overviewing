@@ -8,7 +8,7 @@
         "overview",
         "stc"
     ],
-    "version": "0.0.116",
+    "version": "0.0.118",
     "icon": "resources/stc-deko-icon.png",
     "publisher": "guillaumeisabelle",
     "engines": {
@@ -231,7 +231,8 @@
                         "@bug",
                         "@i",
                         "@s",
-                        "@stcgoal"
+                        "@stcgoal",
+                        "@feature"
                     ],
                     "markdownDescription": "List of tags"
                 },
