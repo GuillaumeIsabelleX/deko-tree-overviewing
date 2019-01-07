@@ -3,6 +3,7 @@
     "displayName": "Todo Tree",
     "description": "Show TODO, FIXME, etc. comment tags in a tree view",
     "keywords": [
+        "@v",
         "todo",
         "task",
         "tasklist",
