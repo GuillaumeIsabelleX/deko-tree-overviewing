@@ -1,5 +1,5 @@
-# v0.0.125 - 2019-01-07
-- Fix icon transparency
+# v0.0.126 - 2019-01-07
+- Making icon 
 
 # v0.0.122 - 2019-01-07
 - Fix icon names
