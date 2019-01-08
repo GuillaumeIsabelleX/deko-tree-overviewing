@@ -34,8 +34,8 @@ QUnit.test( "utils.extractTag removes everything including tag", function( asser
     testConfig.shouldGroupFlag = true;
     utils.init( testConfig );
 
-    var result = utils.extractTag( "before TODO after" );
-    assert.equal( result.tag, "TODO" );
+    var result = utils.extractTag( "before DEKO after" );
+    assert.equal( result.tag, "DEKO" );
     assert.equal( result.withoutTag, "after" );
 } );
 
@@ -46,14 +46,14 @@ QUnit.test( "utils.extractTag can be case sensitive", function( assert )
     testConfig.shouldBeCaseSensitive = false;
     utils.init( testConfig );
 
-    var result = utils.extractTag( "before todo after" );
-    assert.equal( result.tag, "TODO" );
+    var result = utils.extractTag( "before deko after" );
+    assert.equal( result.tag, "DEKO" );
     assert.equal( result.withoutTag, "after" );
 
     testConfig.shouldBeCaseSensitive = true;
-    result = utils.extractTag( "before todo after" );
+    result = utils.extractTag( "before deko after" );
     assert.equal( result.tag, "" );
-    assert.equal( result.withoutTag, "before todo after" );
+    assert.equal( result.withoutTag, "before deko after" );
 } );
 
 QUnit.test( "utils.extractTag returns tag from tags list, not the match", function( assert )
@@ -62,8 +62,8 @@ QUnit.test( "utils.extractTag returns tag from tags list, not the match", functi
     testConfig.shouldGroupFlag = true;
     utils.init( testConfig );
 
-    var result = utils.extractTag( "before todo after" );
-    assert.equal( result.tag, "TODO" );
+    var result = utils.extractTag( "before deko after" );
+    assert.equal( result.tag, "DEKO" );
     assert.equal( result.withoutTag, "after" );
 } );
 
@@ -152,7 +152,7 @@ QUnit.test( "utils.formatLabel replaces before text placeholder", function( asse
 
 QUnit.test( "utils.formatLabel replaces tag placeholder", function( assert )
 {
-    assert.equal( utils.formatLabel( "Label ${tag} content", { tag: "TODO" } ), "Label TODO content" );
+    assert.equal( utils.formatLabel( "Label ${tag} content", { tag: "DEKO" } ), "Label DEKO content" );
 } );
 
 QUnit.test( "utils.formatLabel replaces after text placeholder", function( assert )

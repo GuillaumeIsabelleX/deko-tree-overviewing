@@ -8,7 +8,7 @@
         "overview",
         "stc"
     ],
-    "version": "0.0.118",
+    "version": "0.0.122",
     "icon": "resources/stc-deko-icon.png",
     "publisher": "guillaumeisabelle",
     "engines": {
@@ -29,23 +29,23 @@
         "viewsContainers": {
             "activitybar": [
                 {
-                    "id": "todo-tree-container",
+                    "id": "deko-tree-container",
                     "title": "DEKOs",
-                    "icon": "resources/todo-tree-container.svg"
+                    "icon": "resources/deko-tree-container.svg"
                 }
             ]
         },
         "views": {
             "explorer": [
                 {
-                    "id": "todo-tree-view-explorer",
+                    "id": "deko-tree-view-explorer",
                     "name": "DEKOs",
-                    "when": "todo-tree-has-content && todo-tree-in-explorer"
+                    "when": "deko-tree-has-content && deko-tree-in-explorer"
                 }
             ],
-            "todo-tree-container": [
+            "deko-tree-container": [
                 {
-                    "id": "todo-tree-view",
+                    "id": "deko-tree-view",
                     "name": "DEKOs"
                 }
             ]
@@ -53,60 +53,60 @@
         "menus": {
             "view/title": [
                 {
-                    "command": "todo-tree.expand",
-                    "when": "view =~ /todo-tree/ && todo-tree-expanded == false && todo-tree-collapsible",
+                    "command": "deko-tree.expand",
+                    "when": "view =~ /deko-tree/ && deko-tree-expanded == false && deko-tree-collapsible",
                     "group": "navigation@1"
                 },
                 {
-                    "command": "todo-tree.collapse",
-                    "when": "view =~ /todo-tree/ && todo-tree-expanded == true && todo-tree-collapsible",
+                    "command": "deko-tree.collapse",
+                    "when": "view =~ /deko-tree/ && deko-tree-expanded == true && deko-tree-collapsible",
                     "group": "navigation@1"
                 },
                 {
-                    "command": "todo-tree.showFlatView",
-                    "when": "view =~ /todo-tree/ && todo-tree-flat == false && todo-tree-tags-only == false",
+                    "command": "deko-tree.showFlatView",
+                    "when": "view =~ /deko-tree/ && deko-tree-flat == false && deko-tree-tags-only == false",
                     "group": "navigation@2"
                 },
                 {
-                    "command": "todo-tree.showTagsOnlyView",
-                    "when": "view =~ /todo-tree/ && todo-tree-flat == true && todo-tree-tags-only == false",
+                    "command": "deko-tree.showTagsOnlyView",
+                    "when": "view =~ /deko-tree/ && deko-tree-flat == true && deko-tree-tags-only == false",
                     "group": "navigation@2"
                 },
                 {
-                    "command": "todo-tree.showTreeView",
-                    "when": "view =~ /todo-tree/ && todo-tree-flat == false && todo-tree-tags-only == true",
+                    "command": "deko-tree.showTreeView",
+                    "when": "view =~ /deko-tree/ && deko-tree-flat == false && deko-tree-tags-only == true",
                     "group": "navigation@2"
                 },
                 {
-                    "command": "todo-tree.groupByTag",
-                    "when": "view =~ /todo-tree/ && todo-tree-grouped == false",
+                    "command": "deko-tree.groupByTag",
+                    "when": "view =~ /deko-tree/ && deko-tree-grouped == false",
                     "group": "navigation@3"
                 },
                 {
-                    "command": "todo-tree.ungroupByTag",
-                    "when": "view =~ /todo-tree/ && todo-tree-grouped == true",
+                    "command": "deko-tree.ungroupByTag",
+                    "when": "view =~ /deko-tree/ && deko-tree-grouped == true",
                     "group": "navigation@3"
                 },
                 {
-                    "command": "todo-tree.filter",
-                    "when": "view =~ /todo-tree/ && todo-tree-filtered == false",
+                    "command": "deko-tree.filter",
+                    "when": "view =~ /deko-tree/ && deko-tree-filtered == false",
                     "group": "navigation@4"
                 },
                 {
-                    "command": "todo-tree.filterClear",
-                    "when": "view =~ /todo-tree/ && todo-tree-filtered == true",
+                    "command": "deko-tree.filterClear",
+                    "when": "view =~ /deko-tree/ && deko-tree-filtered == true",
                     "group": "navigation@4"
                 },
                 {
-                    "command": "todo-tree.refresh",
-                    "when": "view =~ /todo-tree/",
+                    "command": "deko-tree.refresh",
+                    "when": "view =~ /deko-tree/",
                     "group": "navigation@5"
                 }
             ]
         },
         "commands": [
             {
-                "command": "todo-tree.showFlatView",
+                "command": "deko-tree.showFlatView",
                 "title": "Show Flat View",
                 "category": "Deko Tree",
                 "icon": {
@@ -115,7 +115,7 @@
                 }
             },
             {
-                "command": "todo-tree.showTagsOnlyView",
+                "command": "deko-tree.showTagsOnlyView",
                 "title": "Show Tags Only View",
                 "category": "Deko Tree",
                 "icon": {
@@ -124,7 +124,7 @@
                 }
             },
             {
-                "command": "todo-tree.showTreeView",
+                "command": "deko-tree.showTreeView",
                 "title": "Show Tree View",
                 "category": "Deko Tree",
                 "icon": {
@@ -133,7 +133,7 @@
                 }
             },
             {
-                "command": "todo-tree.refresh",
+                "command": "deko-tree.refresh",
                 "title": "Refresh",
                 "category": "Deko Tree",
                 "icon": {
@@ -142,7 +142,7 @@
                 }
             },
             {
-                "command": "todo-tree.expand",
+                "command": "deko-tree.expand",
                 "title": "Expand Tree",
                 "category": "Deko Tree",
                 "icon": {
@@ -151,7 +151,7 @@
                 }
             },
             {
-                "command": "todo-tree.collapse",
+                "command": "deko-tree.collapse",
                 "title": "Collapse Tree",
                 "category": "Deko Tree",
                 "icon": {
@@ -160,7 +160,7 @@
                 }
             },
             {
-                "command": "todo-tree.filter",
+                "command": "deko-tree.filter",
                 "title": "Filter Tree",
                 "category": "Deko Tree",
                 "icon": {
@@ -169,7 +169,7 @@
                 }
             },
             {
-                "command": "todo-tree.filterClear",
+                "command": "deko-tree.filterClear",
                 "title": "Clear Filter",
                 "category": "Deko Tree",
                 "icon": {
@@ -178,7 +178,7 @@
                 }
             },
             {
-                "command": "todo-tree.groupByTag",
+                "command": "deko-tree.groupByTag",
                 "title": "Group by Tag",
                 "category": "Deko Tree",
                 "icon": {
@@ -187,7 +187,7 @@
                 }
             },
             {
-                "command": "todo-tree.ungroupByTag",
+                "command": "deko-tree.ungroupByTag",
                 "title": "Ungroup by Tag",
                 "category": "Deko Tree",
                 "icon": {
@@ -196,17 +196,17 @@
                 }
             },
             {
-                "command": "todo-tree.addTag",
+                "command": "deko-tree.addTag",
                 "title": "Add Tag",
                 "category": "Deko Tree"
             },
             {
-                "command": "todo-tree.removeTag",
+                "command": "deko-tree.removeTag",
                 "title": "Remove Tag",
                 "category": "Deko Tree"
             },
             {
-                "command": "todo-tree.toggleStatusBar",
+                "command": "deko-tree.toggleStatusBar",
                 "title": "Toggle Status Indication Type",
                 "category": "Deko Tree"
             }
@@ -215,12 +215,12 @@
             "type": "object",
             "title": "Deko Tree",
             "properties": {
-                "todo-tree.regex": {
+                "deko-tree.regex": {
                     "type": "string",
                     "default": "((//|#|<!--|;|/\\*|^)\\s*($TAGS)|^\\s*- \\[ \\])",
-                    "markdownDescription": "Regular expression for matching TODOs. Note: $TAGS will be replaced by the tag list"
+                    "markdownDescription": "Regular expression for matching DEKOs. Note: $TAGS will be replaced by the tag list"
                 },
-                "todo-tree.tags": {
+                "deko-tree.tags": {
                     "type": "array",
                     "default": [
                         "@v",
@@ -236,107 +236,107 @@
                     ],
                     "markdownDescription": "List of tags"
                 },
-                "todo-tree.rootFolder": {
+                "deko-tree.rootFolder": {
                     "type": "string",
                     "default": "",
                     "markdownDescription": "Folder in which to run the search (defaults to the workspace folder)"
                 },
-                "todo-tree.includeGlobs": {
+                "deko-tree.includeGlobs": {
                     "type": "array",
                     "default": [],
                     "markdownDescription": "Globs for use in limiting search results by inclusion, e.g. `[\"**/unit-tests/*.js\"]` to only show .js files in unit-tests subfolders"
                 },
-                "todo-tree.excludeGlobs": {
+                "deko-tree.excludeGlobs": {
                     "type": "array",
                     "default": [],
                     "markdownDescription": "Globs for use in limiting search results by exclusion (applied after **includeGlobs**), e.g. `[\"**/*.txt\"]` to ignore all .txt files"
                 },
-                "todo-tree.ripgrep": {
+                "deko-tree.ripgrep": {
                     "type": "string",
                     "default": "",
                     "markdownDescription": "Location of your version of ripgrep"
                 },
-                "todo-tree.debug": {
+                "deko-tree.debug": {
                     "type": "boolean",
                     "default": false,
                     "markdownDescription": "Create a debug channel in the Output view"
                 },
-                "todo-tree.ripgrepArgs": {
+                "deko-tree.ripgrepArgs": {
                     "type": "string",
                     "default": "",
                     "markdownDescription": "Additional arguments to pass to ripgrep (Use with caution!)"
                 },
-                "todo-tree.regexCaseSensitive": {
+                "deko-tree.regexCaseSensitive": {
                     "type": "boolean",
                     "default": true,
                     "markdownDescription": "Use a case sensitive regular expression"
                 },
-                "todo-tree.showInExplorer": {
+                "deko-tree.showInExplorer": {
                     "type": "boolean",
                     "default": true,
                     "markdownDescription": "Show the tree in the explorer view"
                 },
-                "todo-tree.filterCaseSensitive": {
+                "deko-tree.filterCaseSensitive": {
                     "type": "boolean",
                     "default": false,
                     "markdownDescription": "Set to true if you want the view filtering to be case sensitive"
                 },
-                "todo-tree.autoRefresh": {
+                "deko-tree.autoRefresh": {
                     "type": "boolean",
                     "default": true,
                     "markdownDescription": "Refresh the tree when files are opened or saved"
                 },
-                "todo-tree.highlightDelay": {
+                "deko-tree.highlightDelay": {
                     "type": "integer",
                     "default": 500,
                     "markdownDescription": "Delay before highlighting tags within files (milliseconds)"
                 },
-                "todo-tree.showTagsFromOpenFilesOnly": {
+                "deko-tree.showTagsFromOpenFilesOnly": {
                     "type": "boolean",
                     "default": false,
-                    "markdownDescription": "Disable scanning of the workspace for TODOs"
+                    "markdownDescription": "Disable scanning of the workspace for DEKOs"
                 },
-                "todo-tree.ripgrepMaxBuffer": {
+                "deko-tree.ripgrepMaxBuffer": {
                     "type": "integer",
                     "default": 200,
                     "markdownDescription": "Size of the buffer to use for retrieving output from ripgrep (kilobytes)"
                 },
-                "todo-tree.trackFile": {
+                "deko-tree.trackFile": {
                     "type": "boolean",
                     "default": true,
                     "markdownDescription": "Track the current file in the tree view"
                 },
-                "todo-tree.showBadges": {
+                "deko-tree.showBadges": {
                     "type": "boolean",
                     "default": true,
                     "markdownDescription": "Show badges and SCM state in the tree view"
                 },
-                "todo-tree.includedWorkspaces": {
+                "deko-tree.includedWorkspaces": {
                     "type": "array",
                     "default": [],
                     "markdownDescription": "An array of workspace names to include as roots in the tree (wildcards can be used). An empty array includes all workspace folders."
                 },
-                "todo-tree.excludedWorkspaces": {
+                "deko-tree.excludedWorkspaces": {
                     "type": "array",
                     "default": [],
                     "markdownDescription": "An array of workspace names to exclude as roots in the tree (wildcards can be used)."
                 },
-                "todo-tree.defaultHighlight": {
+                "deko-tree.defaultHighlight": {
                     "type": "object",
                     "default": {},
-                    "markdownDescription": "Default configuration for highlighting. [Read more...](https://github.com/Gruntfuggly/todo-tree#highlighting)"
+                    "markdownDescription": "Default configuration for highlighting. [Read more...](https://github.com/Gruntfuggly/deko-tree#highlighting)"
                 },
-                "todo-tree.customHighlight": {
+                "deko-tree.customHighlight": {
                     "type": "object",
                     "default": {},
-                    "markdownDescription": "Custom configuration for highlighting, [Read more...](https://github.com/Gruntfuggly/todo-tree#highlighting)"
+                    "markdownDescription": "Custom configuration for highlighting, [Read more...](https://github.com/Gruntfuggly/deko-tree#highlighting)"
                 },
-                "todo-tree.sortTagsOnlyViewAlphabetically": {
+                "deko-tree.sortTagsOnlyViewAlphabetically": {
                     "type": "boolean",
                     "default": false,
                     "markdownDescription": "Sort items in the tags only view alphabetically instead of by file and line number"
                 },
-                "todo-tree.statusBar": {
+                "deko-tree.statusBar": {
                     "type": "string",
                     "enum": [
                         "none",
@@ -346,39 +346,39 @@
                     ],
                     "markdownEnumDescriptions": [
                         "Only show the scanning status in the status bar",
-                        "Show the total number of TODOs in the status bar",
+                        "Show the total number of DEKOs in the status bar",
                         "Show a breakdown of the count of each tag in the status bar",
                         "Show the count of the top three tags in the status bar"
                     ],
                     "default": "none",
                     "markdownDescription": "What to show in the status bar - nothing, total count, or counts per tag"
                 },
-                "todo-tree.showCountsInTree": {
+                "deko-tree.showCountsInTree": {
                     "type": "boolean",
                     "default": false,
-                    "markdownDescription": "Show counts of TODOs in the tree"
+                    "markdownDescription": "Show counts of DEKOs in the tree"
                 },
-                "todo-tree.labelFormat": {
+                "deko-tree.labelFormat": {
                     "type": "string",
                     "default": "${tag} ${after}",
                     "markdownDescription": "Format for tree items"
                 },
-                "todo-tree.expanded": {
+                "deko-tree.expanded": {
                     "type": "boolean",
                     "default": false,
                     "markdownDescription": "When opening new workspaces, show the tree initially fully expanded"
                 },
-                "todo-tree.grouped": {
+                "deko-tree.grouped": {
                     "type": "boolean",
                     "default": false,
                     "markdownDescription": "When opening new workspaces, show the tree initially grouped by tag"
                 },
-                "todo-tree.flat": {
+                "deko-tree.flat": {
                     "type": "boolean",
                     "default": false,
                     "markdownDescription": "When opening new workspaces, show the tree initially as flat list of files"
                 },
-                "todo-tree.tagsOnly": {
+                "deko-tree.tagsOnly": {
                     "type": "boolean",
                     "default": false,
                     "markdownDescription": "When opening new workspaces, show only tag elements in tree"

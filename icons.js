@@ -9,8 +9,8 @@ function getIcon( context, tag )
 {
     var colour = highlights.getIconColour( tag );
 
-    var darkIconPath = context.asAbsolutePath( path.join( "resources/icons", "dark", "todo-green.svg" ) );
-    var lightIconPath = context.asAbsolutePath( path.join( "resources/icons", "light", "todo-green.svg" ) );
+    var darkIconPath = context.asAbsolutePath( path.join( "resources/icons", "dark", "deko-green.svg" ) );
+    var lightIconPath = context.asAbsolutePath( path.join( "resources/icons", "light", "deko-green.svg" ) );
 
     var colourName = utils.isHexColour( colour.substr( 1 ) ) ? colour.substr( 1 ) : colour;
 
@@ -30,7 +30,7 @@ function getIcon( context, tag )
 
         if( context.storagePath )
         {
-            var octiconIconPath = path.join( context.storagePath, "todo-" + iconName + "-" + colourName + ".svg" );
+            var octiconIconPath = path.join( context.storagePath, "deko-" + iconName + "-" + colourName + ".svg" );
             if( !fs.existsSync( octiconIconPath ) )
             {
                 var octiconIconDefinition = "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?>\n" +
@@ -45,7 +45,7 @@ function getIcon( context, tag )
     }
     else if( utils.isHexColour( colour.substr( 1 ) ) )
     {
-        var colouredIconPath = path.join( context.storagePath, "todo-" + colourName + ".svg" );
+        var colouredIconPath = path.join( context.storagePath, "deko-" + colourName + ".svg" );
         if( !fs.existsSync( colouredIconPath ) )
         {
             if( !fs.existsSync( context.storagePath ) )
@@ -70,8 +70,8 @@ function getIcon( context, tag )
     }
     else if( highlights.getColourList().indexOf( colourName ) > -1 )
     {
-        darkIconPath = context.asAbsolutePath( path.join( "resources/icons", "dark", "todo-" + colour + ".svg" ) );
-        lightIconPath = context.asAbsolutePath( path.join( "resources/icons", "light", "todo-" + colour + ".svg" ) );
+        darkIconPath = context.asAbsolutePath( path.join( "resources/icons", "dark", "deko-" + colour + ".svg" ) );
+        lightIconPath = context.asAbsolutePath( path.join( "resources/icons", "light", "deko-" + colour + ".svg" ) );
     }
 
     var icon = {

@@ -29,16 +29,16 @@ function activate( context )
     var provider = new tree.TreeNodeProvider( context );
     var status = vscode.window.createStatusBarItem( vscode.StatusBarAlignment.Left, 0 );
 
-    var todoTreeViewExplorer = vscode.window.createTreeView( "todo-tree-view-explorer", { treeDataProvider: provider } );
-    var todoTreeView = vscode.window.createTreeView( "todo-tree-view", { treeDataProvider: provider } ); //@v Create a Tree from the tree data provider
+    var dekoTreeViewExplorer = vscode.window.createTreeView( "deko-tree-view-explorer", { treeDataProvider: provider } );
+    var dekoTreeView = vscode.window.createTreeView( "deko-tree-view", { treeDataProvider: provider } ); //@v Create a Tree from the tree data provider
     //@o There is a treeDataProvider
 
     var outputChannel;
 
     context.subscriptions.push( provider );
     context.subscriptions.push( status );
-    context.subscriptions.push( todoTreeViewExplorer );
-    context.subscriptions.push( todoTreeView );
+    context.subscriptions.push( dekoTreeViewExplorer );
+    context.subscriptions.push( dekoTreeView );
 
     function resetOutputChannel()
     {
@@ -47,9 +47,9 @@ function activate( context )
             outputChannel.dispose();
             outputChannel = undefined;
         }
-        if( vscode.workspace.getConfiguration( 'todo-tree' ).debug === true )
+        if( vscode.workspace.getConfiguration( 'deko-tree' ).debug === true )
         {
-            outputChannel = vscode.window.createOutputChannel( "Todo Tree" );
+            outputChannel = vscode.window.createOutputChannel( "Deko Tree" );
         }
     }
 
@@ -115,12 +115,12 @@ function activate( context )
     {
         var counts = provider.getTagCounts();
 
-        if( vscode.workspace.getConfiguration( 'todo-tree' ).statusBar === 'total' )
+        if( vscode.workspace.getConfiguration( 'deko-tree' ).statusBar === 'total' )
         {
             var total = Object.values( counts ).reduce( function( a, b ) { return a + b; }, 0 );
 
             status.text = "$(check):" + total;
-            status.tooltip = "Todo-Tree total";
+            status.tooltip = "Deko-Tree total";
 
             if( total > 0 )
             {
@@ -131,13 +131,13 @@ function activate( context )
                 status.hide();
             }
         }
-        else if( vscode.workspace.getConfiguration( 'todo-tree' ).statusBar === 'tags' ||
-            vscode.workspace.getConfiguration( 'todo-tree' ).statusBar === 'top three' )
+        else if( vscode.workspace.getConfiguration( 'deko-tree' ).statusBar === 'tags' ||
+            vscode.workspace.getConfiguration( 'deko-tree' ).statusBar === 'top three' )
         {
             var text = "$(check) ";
             var sortedTags = Object.keys( counts );
             sortedTags.sort( function( a, b ) { return counts[ a ] < counts[ b ] ? 1 : counts[ b ] < counts[ a ] ? -1 : a > b ? 1 : -1; } );
-            if( vscode.workspace.getConfiguration( 'todo-tree' ).statusBar === 'top three' )
+            if( vscode.workspace.getConfiguration( 'deko-tree' ).statusBar === 'top three' )
             {
                 sortedTags = sortedTags.splice( 0, 3 );
             }
@@ -146,7 +146,7 @@ function activate( context )
                 text += tag + ":" + counts[ tag ] + " ";
             } );
             status.text = text;
-            status.tooltip = "Todo-Tree tags counts";
+            status.tooltip = "Deko-Tree tags counts";
             if( Object.keys( counts ).length > 0 )
             {
                 status.show();
@@ -161,13 +161,13 @@ function activate( context )
             status.hide();
         }
 
-        status.command = "todo-tree.toggleStatusBar";
+        status.command = "deko-tree.toggleStatusBar";
     }
 
     function toggleStatusBar()
     {
-        var newSetting = vscode.workspace.getConfiguration( 'todo-tree' ).statusBar === 'total' ? "top three" : "total";
-        vscode.workspace.getConfiguration( 'todo-tree' ).update( 'statusBar', newSetting, true );
+        var newSetting = vscode.workspace.getConfiguration( 'deko-tree' ).statusBar === 'total' ? "top three" : "total";
+        vscode.workspace.getConfiguration( 'deko-tree' ).update( 'statusBar', newSetting, true );
     }
 
     function removeFileFromSearchResults( filename )
@@ -213,14 +213,14 @@ function activate( context )
             {
                 message += " (" + e.stderr + ")";
             }
-            vscode.window.showErrorMessage( "todo-tree: " + message );
+            vscode.window.showErrorMessage( "deko-tree: " + message );
             onComplete();
         } );
     }
 
     function getOptions( filename )
     {
-        var c = vscode.workspace.getConfiguration( 'todo-tree' );
+        var c = vscode.workspace.getConfiguration( 'deko-tree' );
 
         var options = {
             regex: "\"" + utils.getRegexSource() + "\"",
@@ -240,7 +240,7 @@ function activate( context )
         options.additional = c.ripgrepArgs;
         options.maxBuffer = c.ripgrepMaxBuffer;
 
-        if( vscode.workspace.getConfiguration( 'todo-tree' ).get( 'regexCaseSensitive' ) === false )
+        if( vscode.workspace.getConfiguration( 'deko-tree' ).get( 'regexCaseSensitive' ) === false )
         {
             options.additional += '-i ';
         }
@@ -250,10 +250,10 @@ function activate( context )
 
     function searchWorkspaces( searchList )
     {
-        if( vscode.workspace.getConfiguration( 'todo-tree' ).showTagsFromOpenFilesOnly !== true )
+        if( vscode.workspace.getConfiguration( 'deko-tree' ).showTagsFromOpenFilesOnly !== true )
         {
-            var includes = vscode.workspace.getConfiguration( 'todo-tree' ).get( 'includedWorkspaces', [] );
-            var excludes = vscode.workspace.getConfiguration( 'todo-tree' ).get( 'excludedWorkspaces', [] );
+            var includes = vscode.workspace.getConfiguration( 'deko-tree' ).get( 'includedWorkspaces', [] );
+            var excludes = vscode.workspace.getConfiguration( 'deko-tree' ).get( 'excludedWorkspaces', [] );
             if( vscode.workspace.workspaceFolders )
             {
                 vscode.workspace.workspaceFolders.map( function( folder )
@@ -277,8 +277,8 @@ function activate( context )
 
     function applyGlobs()
     {
-        var includeGlobs = vscode.workspace.getConfiguration( 'todo-tree' ).get( 'includeGlobs' );
-        var excludeGlobs = vscode.workspace.getConfiguration( 'todo-tree' ).get( 'excludeGlobs' );
+        var includeGlobs = vscode.workspace.getConfiguration( 'deko-tree' ).get( 'includeGlobs' );
+        var excludeGlobs = vscode.workspace.getConfiguration( 'deko-tree' ).get( 'excludeGlobs' );
 
         if( includeGlobs.length + excludeGlobs.length > 0 )
         {
@@ -319,7 +319,7 @@ function activate( context )
         {
             var rootFolders = [];
             var valid = true;
-            var rootFolder = vscode.workspace.getConfiguration( 'todo-tree' ).get( 'rootFolder' );
+            var rootFolder = vscode.workspace.getConfiguration( 'deko-tree' ).get( 'rootFolder' );
             var envRegex = new RegExp( "\\$\\{(.*?)\\}", "g" );
             if( rootFolder.indexOf( "${workspaceFolder}" ) > -1 )
             {
@@ -350,8 +350,8 @@ function activate( context )
                 } );
             } );
 
-            var includes = vscode.workspace.getConfiguration( 'todo-tree' ).get( 'includedWorkspaces', [] );
-            var excludes = vscode.workspace.getConfiguration( 'todo-tree' ).get( 'excludedWorkspaces', [] );
+            var includes = vscode.workspace.getConfiguration( 'deko-tree' ).get( 'includedWorkspaces', [] );
+            var excludes = vscode.workspace.getConfiguration( 'deko-tree' ).get( 'excludedWorkspaces', [] );
 
             if( valid === true )
             {
@@ -372,9 +372,9 @@ function activate( context )
 
         interrupted = false;
 
-        status.text = "todo-tree: Scanning...";
+        status.text = "deko-tree: Scanning...";
         status.show();
-        status.command = "todo-tree.stopScan";
+        status.command = "deko-tree.stopScan";
         status.tooltip = "Click to interrupt scan";
 
         searchList = getRootFolders();
@@ -391,27 +391,27 @@ function activate( context )
 
     function setButtonsAndContext()
     {
-        var c = vscode.workspace.getConfiguration( 'todo-tree' );
+        var c = vscode.workspace.getConfiguration( 'deko-tree' );
         var isTagsOnly = context.workspaceState.get( 'tagsOnly', c.get( 'tagsOnly', false ) );
         var isGrouped = context.workspaceState.get( 'grouped', c.get( 'grouped', false ) );
         var isCollapsible = !isTagsOnly || isGrouped;
-        vscode.commands.executeCommand( 'setContext', 'todo-tree-expanded', context.workspaceState.get( 'expanded', c.get( 'expanded', false ) ) );
-        vscode.commands.executeCommand( 'setContext', 'todo-tree-flat', context.workspaceState.get( 'flat', c.get( 'flat', false ) ) );
-        vscode.commands.executeCommand( 'setContext', 'todo-tree-tags-only', isTagsOnly );
-        vscode.commands.executeCommand( 'setContext', 'todo-tree-grouped', isGrouped );
-        vscode.commands.executeCommand( 'setContext', 'todo-tree-filtered', context.workspaceState.get( 'filtered', false ) );
-        vscode.commands.executeCommand( 'setContext', 'todo-tree-collapsible', isCollapsible );
+        vscode.commands.executeCommand( 'setContext', 'deko-tree-expanded', context.workspaceState.get( 'expanded', c.get( 'expanded', false ) ) );
+        vscode.commands.executeCommand( 'setContext', 'deko-tree-flat', context.workspaceState.get( 'flat', c.get( 'flat', false ) ) );
+        vscode.commands.executeCommand( 'setContext', 'deko-tree-tags-only', isTagsOnly );
+        vscode.commands.executeCommand( 'setContext', 'deko-tree-grouped', isGrouped );
+        vscode.commands.executeCommand( 'setContext', 'deko-tree-filtered', context.workspaceState.get( 'filtered', false ) );
+        vscode.commands.executeCommand( 'setContext', 'deko-tree-collapsible', isCollapsible );
 
         var children = provider.getChildren();
         var empty = children.length === 1 && children[ 0 ].empty === true;
 
-        vscode.commands.executeCommand( 'setContext', 'todo-tree-has-content', empty === false );
+        vscode.commands.executeCommand( 'setContext', 'deko-tree-has-content', empty === false );
     }
 
     function isIncluded( filename )
     {
-        var includeGlobs = vscode.workspace.getConfiguration( 'todo-tree' ).get( 'includeGlobs' );
-        var excludeGlobs = vscode.workspace.getConfiguration( 'todo-tree' ).get( 'excludeGlobs' );
+        var includeGlobs = vscode.workspace.getConfiguration( 'deko-tree' ).get( 'includeGlobs' );
+        var excludeGlobs = vscode.workspace.getConfiguration( 'deko-tree' ).get( 'excludeGlobs' );
 
         return utils.isIncluded( filename, includeGlobs, excludeGlobs ) === true;
     }
@@ -528,11 +528,11 @@ function activate( context )
         {
             if( tag )
             {
-                var tags = vscode.workspace.getConfiguration( 'todo-tree' ).get( 'tags' );
+                var tags = vscode.workspace.getConfiguration( 'deko-tree' ).get( 'tags' );
                 if( tags.indexOf( tag ) === -1 )
                 {
                     tags.push( tag );
-                    vscode.workspace.getConfiguration( 'todo-tree' ).update( 'tags', tags, true );
+                    vscode.workspace.getConfiguration( 'deko-tree' ).update( 'tags', tags, true );
                 }
             }
         } );
@@ -540,14 +540,14 @@ function activate( context )
 
     function removeTag()
     {
-        var tags = vscode.workspace.getConfiguration( 'todo-tree' ).get( 'tags' );
+        var tags = vscode.workspace.getConfiguration( 'deko-tree' ).get( 'tags' );
         vscode.window.showQuickPick( tags, { matchOnDetail: true, matchOnDescription: true, canPickMany: true, placeHolder: "Select tags to remove" } ).then( function( tagsToRemove )
         {
             tagsToRemove.map( tag =>
             {
                 tags = tags.filter( t => tag != t );
             } );
-            vscode.workspace.getConfiguration( 'todo-tree' ).update( 'tags', tags, true );
+            vscode.workspace.getConfiguration( 'deko-tree' ).update( 'tags', tags, true );
         } );
     }
 
@@ -555,7 +555,7 @@ function activate( context )
     {
         function migrateSettings()
         {
-            var config = vscode.workspace.getConfiguration( 'todo-tree' );
+            var config = vscode.workspace.getConfiguration( 'deko-tree' );
             if( config.get( 'highlight' ) === true )
             {
                 config.update( 'highlight', 'tag', true );
@@ -600,7 +600,7 @@ function activate( context )
             var globs = config.get( 'globs' );
             if( globs && globs.length > 0 && context.workspaceState.get( 'globsMigrated' ) !== true )
             {
-                var prompt = "'todo-tree.globs' has been deprecated. Please use 'todo-tree.includeGlobs' and 'todo-tree.excludeGlobs' instead.";
+                var prompt = "'deko-tree.globs' has been deprecated. Please use 'deko-tree.includeGlobs' and 'deko-tree.excludeGlobs' instead.";
                 var migrate = "Migrate settings";
                 var neverAgain = "Don't show again";
 
@@ -637,17 +637,17 @@ function activate( context )
 
         function showInTree( uri )
         {
-            if( vscode.workspace.getConfiguration( 'todo-tree' ).trackFile === true )
+            if( vscode.workspace.getConfiguration( 'deko-tree' ).trackFile === true )
             {
                 provider.getElement( uri.fsPath, function( element )
                 {
-                    if( todoTreeViewExplorer.visible === true )
+                    if( dekoTreeViewExplorer.visible === true )
                     {
-                        todoTreeViewExplorer.reveal( element, { focus: false, select: true } );
+                        dekoTreeViewExplorer.reveal( element, { focus: false, select: true } );
                     }
-                    if( todoTreeView.visible === true )
+                    if( dekoTreeView.visible === true )
                     {
-                        todoTreeView.reveal( element, { focus: false, select: true } );
+                        dekoTreeView.reveal( element, { focus: false, select: true } );
                     }
                 } );
             }
@@ -670,11 +670,11 @@ function activate( context )
         // We can't do anything if we can't find ripgrep
         if( !config.ripgrepPath() )
         {
-            vscode.window.showErrorMessage( "todo-tree: Failed to find vscode-ripgrep - please install ripgrep manually and set 'todo-tree.ripgrep' to point to the executable" );
+            vscode.window.showErrorMessage( "deko-tree: Failed to find vscode-ripgrep - please install ripgrep manually and set 'deko-tree.ripgrep' to point to the executable" );
             return;
         }
 
-        context.subscriptions.push( vscode.commands.registerCommand( 'todo-tree.revealTodo', ( file, line ) =>
+        context.subscriptions.push( vscode.commands.registerCommand( 'deko-tree.revealDeko', ( file, line ) =>
         {
             selectedDocument = file;
             vscode.workspace.openTextDocument( file ).then( function( document )
@@ -689,7 +689,7 @@ function activate( context )
             } );
         } ) );
 
-        context.subscriptions.push( vscode.commands.registerCommand( 'todo-tree.filter', function()
+        context.subscriptions.push( vscode.commands.registerCommand( 'deko-tree.filter', function()
         {
             vscode.window.showInputBox( { prompt: "Filter tree" } ).then(
                 function( term )
@@ -704,32 +704,32 @@ function activate( context )
                 } );
         } ) );
 
-        context.subscriptions.push( vscode.commands.registerCommand( 'todo-tree.stopScan', function()
+        context.subscriptions.push( vscode.commands.registerCommand( 'deko-tree.stopScan', function()
         {
             ripgrep.kill();
-            status.text = "todo-tree: Scanning interrupted.";
+            status.text = "deko-tree: Scanning interrupted.";
             status.tooltip = "Click to restart";
-            status.command = "todo-tree.refresh";
+            status.command = "deko-tree.refresh";
             interrupted = true;
         } ) );
 
-        context.subscriptions.push( todoTreeViewExplorer.onDidExpandElement( function( e ) { provider.setExpanded( e.element.fsPath, true ); } ) );
-        context.subscriptions.push( todoTreeView.onDidExpandElement( function( e ) { provider.setExpanded( e.element.fsPath, true ); } ) );
-        context.subscriptions.push( todoTreeViewExplorer.onDidCollapseElement( function( e ) { provider.setExpanded( e.element.fsPath, false ); } ) );
-        context.subscriptions.push( todoTreeView.onDidCollapseElement( function( e ) { provider.setExpanded( e.element.fsPath, false ); } ) );
+        context.subscriptions.push( dekoTreeViewExplorer.onDidExpandElement( function( e ) { provider.setExpanded( e.element.fsPath, true ); } ) );
+        context.subscriptions.push( dekoTreeView.onDidExpandElement( function( e ) { provider.setExpanded( e.element.fsPath, true ); } ) );
+        context.subscriptions.push( dekoTreeViewExplorer.onDidCollapseElement( function( e ) { provider.setExpanded( e.element.fsPath, false ); } ) );
+        context.subscriptions.push( dekoTreeView.onDidCollapseElement( function( e ) { provider.setExpanded( e.element.fsPath, false ); } ) );
 
-        context.subscriptions.push( vscode.commands.registerCommand( 'todo-tree.filterClear', clearFilter ) );
-        context.subscriptions.push( vscode.commands.registerCommand( 'todo-tree.refresh', rebuild ) );
-        context.subscriptions.push( vscode.commands.registerCommand( 'todo-tree.showFlatView', showFlatView ) );
-        context.subscriptions.push( vscode.commands.registerCommand( 'todo-tree.showTagsOnlyView', showTagsOnlyView ) );
-        context.subscriptions.push( vscode.commands.registerCommand( 'todo-tree.showTreeView', showTreeView ) );
-        context.subscriptions.push( vscode.commands.registerCommand( 'todo-tree.expand', expand ) );
-        context.subscriptions.push( vscode.commands.registerCommand( 'todo-tree.collapse', collapse ) );
-        context.subscriptions.push( vscode.commands.registerCommand( 'todo-tree.groupByTag', groupByTag ) );
-        context.subscriptions.push( vscode.commands.registerCommand( 'todo-tree.ungroupByTag', ungroupByTag ) );
-        context.subscriptions.push( vscode.commands.registerCommand( 'todo-tree.addTag', addTag ) );
-        context.subscriptions.push( vscode.commands.registerCommand( 'todo-tree.removeTag', removeTag ) );
-        context.subscriptions.push( vscode.commands.registerCommand( 'todo-tree.toggleStatusBar', toggleStatusBar ) );
+        context.subscriptions.push( vscode.commands.registerCommand( 'deko-tree.filterClear', clearFilter ) );
+        context.subscriptions.push( vscode.commands.registerCommand( 'deko-tree.refresh', rebuild ) );
+        context.subscriptions.push( vscode.commands.registerCommand( 'deko-tree.showFlatView', showFlatView ) );
+        context.subscriptions.push( vscode.commands.registerCommand( 'deko-tree.showTagsOnlyView', showTagsOnlyView ) );
+        context.subscriptions.push( vscode.commands.registerCommand( 'deko-tree.showTreeView', showTreeView ) );
+        context.subscriptions.push( vscode.commands.registerCommand( 'deko-tree.expand', expand ) );
+        context.subscriptions.push( vscode.commands.registerCommand( 'deko-tree.collapse', collapse ) );
+        context.subscriptions.push( vscode.commands.registerCommand( 'deko-tree.groupByTag', groupByTag ) );
+        context.subscriptions.push( vscode.commands.registerCommand( 'deko-tree.ungroupByTag', ungroupByTag ) );
+        context.subscriptions.push( vscode.commands.registerCommand( 'deko-tree.addTag', addTag ) );
+        context.subscriptions.push( vscode.commands.registerCommand( 'deko-tree.removeTag', removeTag ) );
+        context.subscriptions.push( vscode.commands.registerCommand( 'deko-tree.toggleStatusBar', toggleStatusBar ) );
 
         context.subscriptions.push( vscode.window.onDidChangeActiveTextEditor( function( e )
         {
@@ -737,7 +737,7 @@ function activate( context )
             {
                 openDocuments[ e.document.fileName ] = e.document;
 
-                if( vscode.workspace.getConfiguration( 'todo-tree' ).autoRefresh === true )
+                if( vscode.workspace.getConfiguration( 'deko-tree' ).autoRefresh === true )
                 {
                     if( e.document.uri && e.document.uri.scheme === "file" )
                     {
@@ -757,7 +757,7 @@ function activate( context )
         {
             if( document.uri.scheme === "file" && path.basename( document.fileName ) !== "settings.json" )
             {
-                if( vscode.workspace.getConfiguration( 'todo-tree' ).autoRefresh === true )
+                if( vscode.workspace.getConfiguration( 'deko-tree' ).autoRefresh === true )
                 {
                     refreshFile( document );
                 }
@@ -766,7 +766,7 @@ function activate( context )
 
         context.subscriptions.push( vscode.workspace.onDidOpenTextDocument( document =>
         {
-            if( vscode.workspace.getConfiguration( 'todo-tree' ).autoRefresh === true )
+            if( vscode.workspace.getConfiguration( 'deko-tree' ).autoRefresh === true )
             {
                 if( document.uri.scheme === "file" )
                 {
@@ -780,9 +780,9 @@ function activate( context )
         {
             delete openDocuments[ document.fileName ];
 
-            if( vscode.workspace.getConfiguration( 'todo-tree' ).autoRefresh === true )
+            if( vscode.workspace.getConfiguration( 'deko-tree' ).autoRefresh === true )
             {
-                if( document.uri.scheme === "file" && vscode.workspace.getConfiguration( 'todo-tree' ).showTagsFromOpenFilesOnly === true )
+                if( document.uri.scheme === "file" && vscode.workspace.getConfiguration( 'deko-tree' ).showTagsFromOpenFilesOnly === true )
                 {
                     removeFileFromSearchResults( document.fileName );
                     provider.remove( document.fileName );
@@ -794,32 +794,32 @@ function activate( context )
 
         context.subscriptions.push( vscode.workspace.onDidChangeConfiguration( function( e )
         {
-            if( e.affectsConfiguration( "todo-tree" ) )
+            if( e.affectsConfiguration( "deko-tree" ) )
             {
-                if( e.affectsConfiguration( "todo-tree.iconColour" ) ||
-                    e.affectsConfiguration( "todo-tree.defaultHighlight" ) ||
-                    e.affectsConfiguration( "todo-tree.customHighlight" ) )
+                if( e.affectsConfiguration( "deko-tree.iconColour" ) ||
+                    e.affectsConfiguration( "deko-tree.defaultHighlight" ) ||
+                    e.affectsConfiguration( "deko-tree.customHighlight" ) )
                 {
                     highlights.refreshComplementaryColours();
                 }
 
-                if( e.affectsConfiguration( "todo-tree.debug" ) )
+                if( e.affectsConfiguration( "deko-tree.debug" ) )
                 {
                     resetOutputChannel();
                 }
 
-                if( e.affectsConfiguration( "todo-tree.includeGlobs" ) ||
-                    e.affectsConfiguration( "todo-tree.excludeGlobs" ) ||
-                    e.affectsConfiguration( "todo-tree.regex" ) ||
-                    e.affectsConfiguration( "todo-tree.ripgrep" ) ||
-                    e.affectsConfiguration( "todo-tree.ripgrepArgs" ) ||
-                    e.affectsConfiguration( "todo-tree.ripgrepMaxBuffer" ) ||
-                    e.affectsConfiguration( "todo-tree.rootFolder" ) ||
-                    e.affectsConfiguration( "todo-tree.showTagsFromOpenFilesOnly" ) ||
-                    e.affectsConfiguration( "todo-tree.includedWorkspaces" ) ||
-                    e.affectsConfiguration( "todo-tree.excludedWorkspaces" ) ||
-                    e.affectsConfiguration( "todo-tree.tags" ) ||
-                    e.affectsConfiguration( "todo-tree.tagsOnly" ) )
+                if( e.affectsConfiguration( "deko-tree.includeGlobs" ) ||
+                    e.affectsConfiguration( "deko-tree.excludeGlobs" ) ||
+                    e.affectsConfiguration( "deko-tree.regex" ) ||
+                    e.affectsConfiguration( "deko-tree.ripgrep" ) ||
+                    e.affectsConfiguration( "deko-tree.ripgrepArgs" ) ||
+                    e.affectsConfiguration( "deko-tree.ripgrepMaxBuffer" ) ||
+                    e.affectsConfiguration( "deko-tree.rootFolder" ) ||
+                    e.affectsConfiguration( "deko-tree.showTagsFromOpenFilesOnly" ) ||
+                    e.affectsConfiguration( "deko-tree.includedWorkspaces" ) ||
+                    e.affectsConfiguration( "deko-tree.excludedWorkspaces" ) ||
+                    e.affectsConfiguration( "deko-tree.tags" ) ||
+                    e.affectsConfiguration( "deko-tree.tagsOnly" ) )
                 {
                     rebuild();
                     documentChanged();
@@ -829,7 +829,7 @@ function activate( context )
                     refresh();
                 }
 
-                vscode.commands.executeCommand( 'setContext', 'todo-tree-in-explorer', vscode.workspace.getConfiguration( 'todo-tree' ).showInExplorer );
+                vscode.commands.executeCommand( 'setContext', 'deko-tree-in-explorer', vscode.workspace.getConfiguration( 'deko-tree' ).showInExplorer );
                 setButtonsAndContext();
             }
         } ) );
@@ -848,7 +848,7 @@ function activate( context )
 
         context.subscriptions.push( outputChannel );
 
-        vscode.commands.executeCommand( 'setContext', 'todo-tree-in-explorer', vscode.workspace.getConfiguration( 'todo-tree' ).showInExplorer );
+        vscode.commands.executeCommand( 'setContext', 'deko-tree-in-explorer', vscode.workspace.getConfiguration( 'deko-tree' ).showInExplorer );
 
         resetOutputChannel();
 

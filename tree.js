@@ -11,7 +11,7 @@ var workspaceFolders;
 var nodes = [];
 
 const PATH = "path";
-const TODO = "todo";
+const DEKO = "deko";
 
 var buildCounter = 1;
 var nodeCounter = 1;
@@ -42,7 +42,7 @@ var findPathNode = function( node )
     return node.type === PATH && node.pathElement === this.toString();
 };
 
-var findTodoNode = function( node )
+var findDekoNode = function( node )
 {
     return node.label === this.label.toString() && node.line === this.line;
 };
@@ -70,7 +70,7 @@ function createWorkspaceRootNode( folder )
         type: PATH,
         label: folder.name,
         nodes: [],
-        todos: [],
+        dekos: [],
         fsPath: folder.uri.fsPath,
         id: id,
         visible: true
@@ -88,7 +88,7 @@ function createPathNode( folder, pathElements )
         pathElement: pathElements[ pathElements.length - 1 ],
         label: pathElements[ pathElements.length - 1 ],
         nodes: [],
-        todos: [],
+        dekos: [],
         id: id,
         visible: true
     };
@@ -105,7 +105,7 @@ function createFlatNode( fsPath, rootNode )
         label: path.basename( fsPath ),
         pathLabel: pathLabel === '.' ? '' : '(' + pathLabel + ')',
         nodes: [],
-        todos: [],
+        dekos: [],
         id: id,
         visible: true
     };
@@ -121,14 +121,14 @@ function createTagNode( fsPath, tag )
         label: tag,
         fsPath: tag,
         nodes: [],
-        todos: [],
+        dekos: [],
         id: id,
         tag: tag,
         visible: true
     };
 }
 
-function createTodoNode( result )
+function createDekoNode( result )
 {
     var id = ( buildCounter * 1000000 ) + nodeCounter++;
     var text = utils.removeBlockComments( result.match.substr( result.column - 1 ), result.file );
@@ -141,7 +141,7 @@ function createTodoNode( result )
     }
 
     return {
-        type: TODO,
+        type: DEKO,
         fsPath: result.file,
         label: label,
         tag: extracted.tag,
@@ -238,11 +238,11 @@ function countTags( child, tagCounts )
     {
         countChildTags( child.nodes, tagCounts );
     }
-    if( child.todos )
+    if( child.dekos )
     {
-        child.todos.map( function( todo )
+        child.dekos.map( function( deko )
         {
-            tagCounts[ todo.tag ] = tagCounts[ todo.tag ] === undefined ? 1 : tagCounts[ todo.tag ] + 1;
+            tagCounts[ deko.tag ] = tagCounts[ deko.tag ] === undefined ? 1 : tagCounts[ deko.tag ] + 1;
         } );
     }
 }
@@ -283,7 +283,7 @@ class TreeNodeProvider
         {
             var availableNodes = nodes.filter( function( node )
             {
-                return node.nodes === undefined || ( node.nodes.length + node.todos.length > 0 );
+                return node.nodes === undefined || ( node.nodes.length + node.dekos.length > 0 );
             } );
             var rootNodes = availableNodes.filter( isVisible );
             if( rootNodes.length > 0 )
@@ -308,10 +308,10 @@ class TreeNodeProvider
             }
             else
             {
-                return node.todos.filter( isVisible );
+                return node.dekos.filter( isVisible );
             }
         }
-        else if( node.type === TODO )
+        else if( node.type === DEKO )
         {
             return node.text;
         }
@@ -381,7 +381,7 @@ class TreeNodeProvider
                     treeItem.iconPath = vscode.ThemeIcon.File;
                 }
             }
-            else if( node.type === TODO )
+            else if( node.type === DEKO )
             {
                 treeItem.iconPath = icons.getIcon( this._context, node.tag ? node.tag : node.label );
                 var format = config.labelFormat();
@@ -391,7 +391,7 @@ class TreeNodeProvider
                 }
 
                 treeItem.command = {
-                    command: "todo-tree.revealTodo",
+                    command: "deko-tree.revealDeko",
                     title: "",
                     arguments: [
                         node.fsPath,
@@ -433,9 +433,9 @@ class TreeNodeProvider
             nodes.sort( config.shouldGroup() ? sortByTagAndLine : ( config.shouldSortTagsOnlyViewAlphabetically() ? sortByLabelAndLine : sortByFilenameAndLine ) );
             nodes.forEach( function( node )
             {
-                if( node.todos )
+                if( node.dekos )
                 {
-                    node.todos.sort( config.shouldSortTagsOnlyViewAlphabetically() ? sortByLabelAndLine : sortByFilenameAndLine );
+                    node.dekos.sort( config.shouldSortTagsOnlyViewAlphabetically() ? sortByLabelAndLine : sortByFilenameAndLine );
                 }
             } );
         }
@@ -453,7 +453,7 @@ class TreeNodeProvider
         }
         children.forEach( child =>
         {
-            if( child.type === TODO )
+            if( child.type === DEKO )
             {
                 var match = matcher.test( child.label );
                 child.visible = !text || match;
@@ -464,13 +464,13 @@ class TreeNodeProvider
                 {
                     this.filter( text, child.nodes );
                 }
-                if( child.todos !== undefined )
+                if( child.dekos !== undefined )
                 {
-                    this.filter( text, child.todos );
+                    this.filter( text, child.dekos );
                 }
                 var visibleNodes = child.nodes ? child.nodes.filter( isVisible ).length : 0;
-                var visibleTodos = child.todos ? child.todos.filter( isVisible ).length : 0;
-                child.visible = visibleNodes + visibleTodos > 0;
+                var visibleDekos = child.dekos ? child.dekos.filter( isVisible ).length : 0;
+                child.visible = visibleNodes + visibleDekos > 0;
             }
         } );
     }
@@ -488,9 +488,9 @@ class TreeNodeProvider
             {
                 this.clearFilter( child.nodes );
             }
-            if( child.todos !== undefined )
+            if( child.dekos !== undefined )
             {
-                this.clearFilter( child.todos );
+                this.clearFilter( child.dekos );
             }
         }, this );
     }
@@ -503,38 +503,38 @@ class TreeNodeProvider
         }
 
         var rootNode = locateWorkspaceNode( nodes, result.file );
-        var todoNode = createTodoNode( result );
+        var dekoNode = createDekoNode( result );
 
         var childNode;
         if( config.shouldShowTagsOnly() )
         {
             if( config.shouldGroup() )
             {
-                if( todoNode.tag )
+                if( dekoNode.tag )
                 {
-                    childNode = nodes.find( findTagNode, todoNode.tag );
+                    childNode = nodes.find( findTagNode, dekoNode.tag );
                     if( childNode === undefined )
                     {
-                        childNode = createTagNode( result.file, todoNode.tag );
+                        childNode = createTagNode( result.file, dekoNode.tag );
                         nodes.push( childNode );
                     }
                 }
-                else if( nodes.find( findTodoNode, todoNode ) === undefined )
+                else if( nodes.find( findDekoNode, dekoNode ) === undefined )
                 {
-                    nodes.push( todoNode );
+                    nodes.push( dekoNode );
                 }
             }
             else
             {
-                if( nodes.find( findTodoNode, todoNode ) === undefined )
+                if( nodes.find( findDekoNode, dekoNode ) === undefined )
                 {
-                    nodes.push( todoNode );
+                    nodes.push( dekoNode );
                 }
             }
         }
         else if( config.shouldFlatten() || rootNode === undefined )
         {
-            childNode = locateFlatChildNode( rootNode, result, todoNode.tag );
+            childNode = locateFlatChildNode( rootNode, result, dekoNode.tag );
         }
         else if( rootNode )
         {
@@ -544,22 +544,22 @@ class TreeNodeProvider
             {
                 pathElements = relativePath.split( path.sep );
             }
-            childNode = locateTreeChildNode( rootNode, pathElements, todoNode.tag );
+            childNode = locateTreeChildNode( rootNode, pathElements, dekoNode.tag );
         }
 
         if( childNode )
         {
-            if( childNode.todos === undefined )
+            if( childNode.dekos === undefined )
             {
-                childNode.todos = [];
+                childNode.dekos = [];
             }
 
             childNode.expanded = result.expanded;
 
-            if( childNode.todos.find( findTodoNode, todoNode ) === undefined )
+            if( childNode.dekos.find( findDekoNode, dekoNode ) === undefined )
             {
-                todoNode.parent = childNode;
-                childNode.todos.push( todoNode );
+                dekoNode.parent = childNode;
+                childNode.dekos.push( dekoNode );
                 childNode.showCount = true;
             }
         }
@@ -579,11 +579,11 @@ class TreeNodeProvider
             {
                 this.reset( filename, child.nodes );
             }
-            if( child.type === TODO && !child.tag && child.fsPath == filename ) // no tag (e.g. markdown)
+            if( child.type === DEKO && !child.tag && child.fsPath == filename ) // no tag (e.g. markdown)
             {
                 keep = false;
             }
-            else if( child.type === TODO && child.parent === undefined && child.fsPath == filename ) // top level todo node
+            else if( child.type === DEKO && child.parent === undefined && child.fsPath == filename ) // top level deko node
             {
                 keep = false;
             }
@@ -591,17 +591,17 @@ class TreeNodeProvider
             {
                 if( config.shouldShowTagsOnly() )
                 {
-                    if( child.todos )
+                    if( child.dekos )
                     {
-                        child.todos = child.todos.filter( function( todo )
+                        child.dekos = child.dekos.filter( function( deko )
                         {
-                            return todo.fsPath !== filename;
+                            return deko.fsPath !== filename;
                         } );
                     }
                 }
                 else
                 {
-                    child.todos = [];
+                    child.dekos = [];
                 }
             }
             return keep;
@@ -641,7 +641,7 @@ class TreeNodeProvider
                 {
                     child.nodes = me.remove( filename, child.nodes );
                 }
-                var shouldRemove = ( child.nodes && child.todos && child.nodes.length + child.todos.length === 0 && child.isWorkspaceNode !== true );
+                var shouldRemove = ( child.nodes && child.dekos && child.nodes.length + child.dekos.length === 0 && child.isWorkspaceNode !== true );
                 if( shouldRemove )
                 {
                     delete expandedNodes[ child.fsPath ];
