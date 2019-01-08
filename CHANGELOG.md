@@ -1,3 +1,6 @@
+# v0.0.123 - 2019-01-07
+- Fix icon transparency
+
 # v0.0.122 - 2019-01-07
 - Fix icon names
 
