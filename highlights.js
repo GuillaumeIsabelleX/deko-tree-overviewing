@@ -1,8 +1,8 @@
-var vscode = require( 'vscode' );
+var vscode = require('vscode');
 
-var utils = require( './utils.js' );
+var utils = require('./utils.js');
 
-var defaultColours = [ "red", "green", "blue", "yellow", "magenta", "cyan", "grey", "white", "black" ];
+var defaultColours = ["red", "green", "blue", "yellow", "magenta", "cyan", "grey", "white", "black"];
 
 var defaultLightColours = {
     "red": "#CC0000",
@@ -32,89 +32,72 @@ var complementaryColours = {};
 var decorations = {};
 var highlightTimer = {};
 
-function init( context )
-{
-    context.subscriptions.push( decorations );
+function init(context) {
+    context.subscriptions.push(decorations);
 }
 
-function getColourList()
-{
+function getColourList() {
     return defaultColours;
 }
 
-function complementaryColour( colour )
-{
-    var hex = colour.split( / / )[ 0 ].replace( /[^\da-fA-F]/g, '' );
+function complementaryColour(colour) {
+    var hex = colour.split(/ /)[0].replace(/[^\da-fA-F]/g, '');
     var digits = hex.length / 3;
-    var red = parseInt( hex.substr( 0, digits ), 16 );
-    var green = parseInt( hex.substr( 1 * digits, digits ), 16 );
-    var blue = parseInt( hex.substr( 2 * digits, digits ), 16 );
-    var c = [ red / 255, green / 255, blue / 255 ];
-    for( var i = 0; i < c.length; ++i )
-    {
-        if( c[ i ] <= 0.03928 )
-        {
-            c[ i ] = c[ i ] / 12.92;
-        } else
-        {
-            c[ i ] = Math.pow( ( c[ i ] + 0.055 ) / 1.055, 2.4 );
+    var red = parseInt(hex.substr(0, digits), 16);
+    var green = parseInt(hex.substr(1 * digits, digits), 16);
+    var blue = parseInt(hex.substr(2 * digits, digits), 16);
+    var c = [red / 255, green / 255, blue / 255];
+    for (var i = 0; i < c.length; ++i) {
+        if (c[i] <= 0.03928) {
+            c[i] = c[i] / 12.92;
+        } else {
+            c[i] = Math.pow((c[i] + 0.055) / 1.055, 2.4);
         }
     }
-    var l = 0.2126 * c[ 0 ] + 0.7152 * c[ 1 ] + 0.0722 * c[ 2 ];
+    var l = 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
     return l > 0.179 ? "#000000" : "#ffffff";
 }
 
-function getDecoration( tag )
-{
-    var foregroundColour = getForeground( tag );
-    var backgroundColour = getBackground( tag );
+function getDecoration(tag) {
+    var foregroundColour = getForeground(tag);
+    var backgroundColour = getBackground(tag);
 
     var lightForegroundColour = foregroundColour;
     var darkForegroundColour = foregroundColour;
     var lightBackgroundColour = backgroundColour;
     var darkBackgroundColour = backgroundColour;
 
-    if( foregroundColour )
-    {
-        if( !utils.isHexColour( foregroundColour ) )
-        {
-            if( defaultColours.indexOf( foregroundColour ) > -1 )
-            {
-                lightForegroundColour = defaultLightColours[ foregroundColour ];
-                darkForegroundColour = defaultDarkColours[ foregroundColour ];
+    if (foregroundColour) {
+        if (!utils.isHexColour(foregroundColour)) {
+            if (defaultColours.indexOf(foregroundColour) > -1) {
+                lightForegroundColour = defaultLightColours[foregroundColour];
+                darkForegroundColour = defaultDarkColours[foregroundColour];
             }
-            else
-            {
+            else {
                 lightForegroundColour = "#ffffff";
                 darkForegroundColour = "#000000";
             }
         }
     }
 
-    if( backgroundColour )
-    {
-        if( backgroundColour !== undefined && !utils.isHexColour( backgroundColour ) )
-        {
-            if( defaultColours.indexOf( backgroundColour ) > -1 )
-            {
-                lightBackgroundColour = defaultLightColours[ backgroundColour ];
-                darkBackgroundColour = defaultDarkColours[ backgroundColour ];
+    if (backgroundColour) {
+        if (backgroundColour !== undefined && !utils.isHexColour(backgroundColour)) {
+            if (defaultColours.indexOf(backgroundColour) > -1) {
+                lightBackgroundColour = defaultLightColours[backgroundColour];
+                darkBackgroundColour = defaultDarkColours[backgroundColour];
             }
-            else
-            {
+            else {
                 lightBackgroundColour = "#ffffff";
                 darkBackgroundColour = "#000000";
             }
         }
     }
 
-    if( lightForegroundColour === undefined )
-    {
-        lightForegroundColour = complementaryColours[ lightBackgroundColour ];
+    if (lightForegroundColour === undefined) {
+        lightForegroundColour = complementaryColours[lightBackgroundColour];
     }
-    if( darkForegroundColour === undefined )
-    {
-        darkForegroundColour = complementaryColours[ darkBackgroundColour ];
+    if (darkForegroundColour === undefined) {
+        darkForegroundColour = complementaryColours[darkBackgroundColour];
     }
 
     var decorationOptions = {
@@ -126,192 +109,163 @@ function getDecoration( tag )
     decorationOptions.light = { backgroundColor: lightBackgroundColour, color: lightForegroundColour };
     decorationOptions.dark = { backgroundColor: darkBackgroundColour, color: darkForegroundColour };
 
-    return vscode.window.createTextEditorDecorationType( decorationOptions );
+    return vscode.window.createTextEditorDecorationType(decorationOptions);
 }
 
-function getAttribute( tag, attribute, defaultValue )
-{
-    function getCustomHighlightSettings( customHighlight, tag )
-    {
+function getAttribute(tag, attribute, defaultValue) {
+    function getCustomHighlightSettings(customHighlight, tag) {
         var result;
-        Object.keys( customHighlight ).map( function( t )
-        {
+        Object.keys(customHighlight).map(function (t) {
             var flags = '';
-            if( vscode.workspace.getConfiguration( 'deko-tree' ).get( 'regexCaseSensitive' ) === false )
-            {
+            if (vscode.workspace.getConfiguration('deko-tree').get('regexCaseSensitive') === false) {
                 flags += 'i';
             }
-            var regex = new RegExp( t, flags );
+            var regex = new RegExp(t, flags);
 
-            if( tag.match( regex ) )
-            {
-                result = customHighlight[ t ];
+            if (tag.match(regex)) {
+                result = customHighlight[t];
             }
-        } );
+        });
         return result;
     }
 
-    var config = vscode.workspace.getConfiguration( 'deko-tree' );
-    var tagSettings = getCustomHighlightSettings( config.customHighlight, tag );
-    if( tagSettings && tagSettings[ attribute ] !== undefined )
-    {
-        return tagSettings[ attribute ];
+    var config = vscode.workspace.getConfiguration('deko-tree');
+    var tagSettings = getCustomHighlightSettings(config.customHighlight, tag);
+    if (tagSettings && tagSettings[attribute] !== undefined) {
+        return tagSettings[attribute];
     }
-    else
-    {
-        var defaultHighlight = config.get( 'defaultHighlight' );
-        if( defaultHighlight[ attribute ] !== undefined )
-        {
-            return defaultHighlight[ attribute ];
+    else {
+        var defaultHighlight = config.get('defaultHighlight');
+        if (defaultHighlight[attribute] !== undefined) {
+            return defaultHighlight[attribute];
         }
     }
     return defaultValue;
 }
 
-function getForeground( tag )
-{
-    return getAttribute( tag, 'foreground', undefined );
+function getForeground(tag) {
+    return getAttribute(tag, 'foreground', undefined);
 }
 
-function getBackground( tag )
-{
-    return getAttribute( tag, 'background', undefined );
+function getBackground(tag) {
+    return getAttribute(tag, 'background', undefined);
 }
 
-function getIcon( tag )
-{
-    return getAttribute( tag, 'icon', undefined );
+function getIcon(tag) {
+    return getAttribute(tag, 'icon', undefined);
 }
 
-function getIconColour( tag )
-{
-    var foreground = getAttribute( tag, 'foreground', undefined );
-    var background = getAttribute( tag, 'background', undefined );
+function getIconColour(tag) {
+    var foreground = getAttribute(tag, 'foreground', undefined);
+    var background = getAttribute(tag, 'background', undefined);
 
-    return getAttribute( tag, 'iconColour', foreground ? foreground : ( background ? background : "green" ) );
+    if (tag == "@s") return getAttribute(tag, 'iconColour', foreground ? foreground : (background ? background : "orange"));
+
+    if (tag == "@v") return getAttribute(tag, 'iconColour', foreground ? foreground : (background ? background : "magenta"));
+
+    if (tag == "@o") return getAttribute(tag, 'iconColour', foreground ? foreground : (background ? background : "cyan"));
+
+    return getAttribute(tag, 'iconColour', foreground ? foreground : (background ? background : "green"));
 }
 
-function getType( tag )
-{
-    return getAttribute( tag, 'type', vscode.workspace.getConfiguration( 'deko-tree' ).get( 'highlight' ) );
+function getType(tag) {
+    return getAttribute(tag, 'type', vscode.workspace.getConfiguration('deko-tree').get('highlight'));
 }
 
-function getOtherColours()
-{
-    function addColour( colour )
-    {
-        if( colour !== undefined )
-        {
-            colours.push( colour );
+function getOtherColours() {
+    function addColour(colour) {
+        if (colour !== undefined) {
+            colours.push(colour);
         }
     }
 
     var colours = [];
 
-    var config = vscode.workspace.getConfiguration( 'deko-tree' );
-    var customHighlight = config.get( 'customHighlight' );
+    var config = vscode.workspace.getConfiguration('deko-tree');
+    var customHighlight = config.get('customHighlight');
 
-    addColour( config.get( 'iconColour' ) );
-    addColour( config.get( 'defaultHighlight' ).foreground );
-    addColour( config.get( 'defaultHighlight' ).background );
-    Object.keys( customHighlight ).map( function( tag )
-    {
-        addColour( customHighlight[ tag ].foreground );
-        addColour( customHighlight[ tag ].background );
-    } );
+    addColour(config.get('iconColour'));
+    addColour(config.get('defaultHighlight').foreground);
+    addColour(config.get('defaultHighlight').background);
+    Object.keys(customHighlight).map(function (tag) {
+        addColour(customHighlight[tag].foreground);
+        addColour(customHighlight[tag].background);
+    });
 
     return colours;
 }
 
-function refreshComplementaryColours()
-{
+function refreshComplementaryColours() {
     complementaryColours = {};
 
-    Object.keys( defaultLightColours ).forEach( function( colour )
-    {
-        complementaryColours[ defaultLightColours[ colour ] ] = complementaryColour( defaultLightColours[ colour ] );
-    } );
-    Object.keys( defaultDarkColours ).forEach( function( colour )
-    {
-        complementaryColours[ defaultDarkColours[ colour ] ] = complementaryColour( defaultDarkColours[ colour ] );
-    } );
+    Object.keys(defaultLightColours).forEach(function (colour) {
+        complementaryColours[defaultLightColours[colour]] = complementaryColour(defaultLightColours[colour]);
+    });
+    Object.keys(defaultDarkColours).forEach(function (colour) {
+        complementaryColours[defaultDarkColours[colour]] = complementaryColour(defaultDarkColours[colour]);
+    });
 
     var otherColours = getOtherColours();
 
-    otherColours.forEach( function( colour )
-    {
-        if( utils.isHexColour( colour ) )
-        {
-            complementaryColours[ colour ] = complementaryColour( colour );
+    otherColours.forEach(function (colour) {
+        if (utils.isHexColour(colour)) {
+            complementaryColours[colour] = complementaryColour(colour);
         }
-    } );
+    });
 }
 
-function highlight( editor )
-{
+function highlight(editor) {
     var documentHighlights = {};
 
-    if( editor )
-    {
+    if (editor) {
         var text = editor.document.getText();
         var regex = utils.getRegex();
         var match;
-        while( ( match = regex.exec( text ) ) !== null )
-        {
-            var tag = match[ 0 ];
-            var type = getType( tag );
-            if( type !== 'none' )
-            {
-                var startPos = editor.document.positionAt( match.index );
-                var endPos = editor.document.positionAt( match.index + match[ 0 ].length );
+        while ((match = regex.exec(text)) !== null) {
+            var tag = match[0];
+            var type = getType(tag);
+            if (type !== 'none') {
+                var startPos = editor.document.positionAt(match.index);
+                var endPos = editor.document.positionAt(match.index + match[0].length);
 
-                if( type === 'text' )
-                {
-                    endPos = new vscode.Position( endPos.line, editor.document.lineAt( endPos.line ).range.end.character );
+                if (type === 'text') {
+                    endPos = new vscode.Position(endPos.line, editor.document.lineAt(endPos.line).range.end.character);
                 }
 
-                if( type === 'line' )
-                {
-                    endPos = new vscode.Position( endPos.line, editor.document.lineAt( endPos.line ).range.end.character );
-                    startPos = new vscode.Position( endPos.line, 0 );
+                if (type === 'line') {
+                    endPos = new vscode.Position(endPos.line, editor.document.lineAt(endPos.line).range.end.character);
+                    startPos = new vscode.Position(endPos.line, 0);
                 }
 
-                var decoration = { range: new vscode.Range( startPos, endPos ) };
-                if( documentHighlights[ tag ] === undefined )
-                {
-                    documentHighlights[ tag ] = [];
+                var decoration = { range: new vscode.Range(startPos, endPos) };
+                if (documentHighlights[tag] === undefined) {
+                    documentHighlights[tag] = [];
                 }
-                documentHighlights[ tag ].push( decoration );
+                documentHighlights[tag].push(decoration);
             }
         }
 
-        if( decorations[ editor.id ] )
-        {
-            decorations[ editor.id ].forEach( function( decoration )
-            {
+        if (decorations[editor.id]) {
+            decorations[editor.id].forEach(function (decoration) {
                 decoration.dispose();
-            } );
+            });
         }
 
-        decorations[ editor.id ] = [];
-        Object.keys( documentHighlights ).forEach( function( tag )
-        {
-            var decoration = getDecoration( tag );
-            decorations[ editor.id ].push( decoration );
-            editor.setDecorations( decoration, documentHighlights[ tag ] );
-        } );
+        decorations[editor.id] = [];
+        Object.keys(documentHighlights).forEach(function (tag) {
+            var decoration = getDecoration(tag);
+            decorations[editor.id].push(decoration);
+            editor.setDecorations(decoration, documentHighlights[tag]);
+        });
     }
 }
 
-function triggerHighlight( editor )
-{
-    if( editor )
-    {
-        if( highlightTimer[ editor.id ] )
-        {
-            clearTimeout( highlightTimer[ editor.id ] );
+function triggerHighlight(editor) {
+    if (editor) {
+        if (highlightTimer[editor.id]) {
+            clearTimeout(highlightTimer[editor.id]);
         }
-        highlightTimer[ editor.id ] = setTimeout( highlight, vscode.workspace.getConfiguration( 'deko-tree' ).highlightDelay, editor );
+        highlightTimer[editor.id] = setTimeout(highlight, vscode.workspace.getConfiguration('deko-tree').highlightDelay, editor);
     }
 }
 
