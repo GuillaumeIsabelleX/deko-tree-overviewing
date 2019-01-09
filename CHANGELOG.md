@@ -1,3 +1,12 @@
+# v0.0.134 - 2019-01-09
+- Icon colored by type matching gixdeko-comments extension
+
+# v0.0.133 - 2019-01-09
+- added @test, @result, @A,@V,@CR
+
+# v0.0.132 - 2019-01-07
+- added @cr
+
 # v0.0.130 - 2019-01-07
 - Made icon 
 

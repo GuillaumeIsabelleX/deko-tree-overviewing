@@ -8,7 +8,7 @@
         "overview",
         "stc"
     ],
-    "version": "0.0.130",
+    "version": "0.0.134",
     "icon": "resources/stc-deko-icon.png",
     "publisher": "guillaumeisabelle",
     "engines": {
@@ -224,13 +224,21 @@
                     "type": "array",
                     "default": [
                         "@v",
+			"@V",
                         "@mc",
                         "@a",
+			"@A",
                         "@startmc",
                         "@startuml",
                         "@bug",
+			"@test",
+			"@result",
                         "@i",
                         "@s",
+			"@cr",
+			"@CR",
+			"@goal",
+			"@currentreality",
                         "@stcgoal",
                         "@feature"
                     ],

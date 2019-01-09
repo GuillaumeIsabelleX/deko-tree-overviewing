@@ -9,8 +9,24 @@ function getIcon( context, tag )
 {
     var colour = highlights.getIconColour( tag );
 
-    var darkIconPath = context.asAbsolutePath( path.join( "resources/icons", "dark", "deko-green.svg" ) );
-    var lightIconPath = context.asAbsolutePath( path.join( "resources/icons", "light", "deko-green.svg" ) );
+	var def_icon_fn = "deko-green.svg";
+	
+	try {
+		if (tag.indexOf("cr")>-1)
+			def_icon_fn = "deko-orange.svg";
+		
+		if (tag.indexOf("q")>-1)
+			def_icon_fn = "deko-blue.svg";
+		
+		if (tag.indexOf("result")>-1)
+			def_icon_fn = "deko-white.svg";
+		
+			
+	} catch(err){}
+	
+    var darkIconPath = context.asAbsolutePath( path.join( "resources/icons", "dark", def_icon_fn ) );
+	
+    var lightIconPath = context.asAbsolutePath( path.join( "resources/icons", "light",  def_icon_fn ) );
 
     var colourName = utils.isHexColour( colour.substr( 1 ) ) ? colour.substr( 1 ) : colour;
 
