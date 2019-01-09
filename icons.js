@@ -16,7 +16,7 @@ function getIcon( context, tag )
 			def_icon_fn = "deko-orange.svg";
 		
 		if (tag.indexOf("q")>-1)
-			def_icon_fn = "deko-blue.svg";
+			def_icon_fn = "deko-yellow.svg";
 		
 		if (tag.indexOf("result")>-1)
 			def_icon_fn = "deko-white.svg";

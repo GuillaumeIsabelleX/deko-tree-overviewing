@@ -1,3 +1,6 @@
+# v0.0.135 - 2019-01-09
+- Added @bug, @issue 
+
 # v0.0.134 - 2019-01-09
 - Icon colored by type matching gixdeko-comments extension
 
