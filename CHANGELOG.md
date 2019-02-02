@@ -1,3 +1,6 @@
+# v0.0.137 - 2019-02-02
+- Added couples of elements
+
 # v0.0.135 - 2019-01-09
 - Added @bug, @issue 
 
