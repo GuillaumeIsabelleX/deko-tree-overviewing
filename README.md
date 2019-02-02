@@ -1,5 +1,9 @@
 # STC Deko Tree
 
+## Goal ##
+* Present a structural overview of the dekorator used in the code.  See gixdeko-comments
+
+
 ## Supported Tags ##
 * @v
 * @a
