@@ -1,5 +1,8 @@
 # STC Deko Tree
 
+## Installing ##
+ * [GuillaumeIsabelle.deko-tree-overviewing]() VS Extension 
+
 ## Goal ##
 * Present a structural overview of the dekorator used in the code.  See gixdeko-comments
 
@@ -30,6 +33,13 @@
 Found DEKOs can also be highlighted in open files.
 
 <img src="https://raw.githubusercontent.com/guillaumeisabellex/deko-tree/master/resources/screenshot.png">
+
+
+
+
+
+[GuillaumeIsabelle.deko-tree-overviewing]:https://marketplace.visualstudio.com/items?itemName=GuillaumeIsabelle.deko-tree-overviewing
+
 
 
 ## FORK of the Todo Tree
