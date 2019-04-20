@@ -1,3 +1,9 @@
+# v0.0.143 - 2019-04-20
+- fix: build/release scripts
+
+# v0.0.142 - 2019-04-20
+- fix: removed useless dependencies
+
 # v0.0.141 - 2019-04-20
 - fix: circleci publish cmd
 

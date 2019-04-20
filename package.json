@@ -8,7 +8,7 @@
         "overview",
         "stc"
     ],
-    "version": "0.0.141",
+    "version": "0.0.143",
     "icon": "resources/stc-deko-icon.png",
     "publisher": "guillaumeisabelle",
     "engines": {
@@ -19,12 +19,7 @@
     "scripts": {
         "test": "qunit -c utils.js -t test/tests.js",
         "pre-release-patch": "npm version patch ; git commit package.json -m \"version published\" ; git push",
-        "publish": "npm run pre-release-patch && vsce publish",
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "lint": "tslint -c tslint.json 'src/**/*.ts'"
+        "publish": "npm run pre-release-patch && vsce publish"
     },
     "categories": [
         "Other"
@@ -412,10 +407,10 @@
         "comment-patterns": "^0.10.1",
         "micromatch": "^3.1.10",
         "minimatch": "^3.0.4",
-        "octicons": "^7.4.0",
-        "vscode": "^1.1.26"
+        "octicons": "^7.4.0"
     },
     "devDependencies": {
+        "vscode": "^1.1.26",
         "node-qunit": "^1.0.0",
         "qunit": "^2.8.0"
     }
