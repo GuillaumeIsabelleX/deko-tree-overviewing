@@ -7,7 +7,7 @@ ext install GuillaumeIsabelle.deko-tree-overviewing
 ```
 
 ## Goal ##
-* Present a structural overview of the dekorator used in the code.  See [gixdeko-comments]()
+* Present a structural overview of the dekorator used in the code. 
 
 
 
