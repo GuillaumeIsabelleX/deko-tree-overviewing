@@ -1,3 +1,6 @@
+# v0.0.146 - 2019-04-20
+- fix: doc link
+
 # v0.0.145 - 2019-04-20
 - fix: dependencies
 

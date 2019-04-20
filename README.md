@@ -4,7 +4,10 @@
  * [GuillaumeIsabelle.deko-tree-overviewing]() VS Extension 
 
 ## Goal ##
-* Present a structural overview of the dekorator used in the code.  See gixdeko-comments
+* Present a structural overview of the dekorator used in the code.  See [gixdeko-comments]()
+
+
+[gixdeko-comments]:https://marketplace.visualstudio.com/items?itemName=GuillaumeIsabelle.gixdeko-comments
 
 
 ## Supported Tags ##
