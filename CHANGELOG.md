@@ -1,3 +1,6 @@
+# v0.0.144 - 2019-04-20
+- fix: Bug vscode Uri
+
 # v0.0.143 - 2019-04-20
 - fix: build/release scripts
 
