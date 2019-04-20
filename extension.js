@@ -583,19 +583,14 @@ function activate( context )
 
                 tags.map( function( tag )
                 {
-                    try {
-                        customHighlight[ tag ] = {};
-                        if( icons[ tag ] !== undefined )
-                        {
-                            customHighlight[ tag ].icon = icons[ tag ];
-                        }
-                        if( iconColours[ tag ] !== undefined )
-                        {
-                            customHighlight[ tag ].foreground = iconColours[ tag ];
-                        }
-                        
-                    } catch (error) {
-                        console.log(error);
+                    customHighlight[ tag ] = {};
+                    if( icons[ tag ] !== undefined )
+                    {
+                        customHighlight[ tag ].icon = icons[ tag ];
+                    }
+                    if( iconColours[ tag ] !== undefined )
+                    {
+                        customHighlight[ tag ].foreground = iconColours[ tag ];
                     }
                 } );
 
@@ -642,7 +637,6 @@ function activate( context )
 
         function showInTree( uri )
         {
-            console.log("TESTING:: function showInTree( uri )");
             if( vscode.workspace.getConfiguration( 'deko-tree' ).trackFile === true )
             {
                 provider.getElement( uri.fsPath, function( element )
@@ -749,7 +743,7 @@ function activate( context )
                     {
                         if( selectedDocument !== e.document.fileName )
                         {
-                            setTimeout( showInTree, 800, e.document.uri );
+                            setTimeout( showInTree, 500, e.document.uri );
                         }
                         selectedDocument = undefined;
                     }
