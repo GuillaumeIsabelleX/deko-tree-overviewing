@@ -1,3 +1,6 @@
+# v0.0.140 - 2019-04-20
+- added: LICENSE
+
 # v0.0.139 - 2019-04-20
 - added: release publish scripts
 

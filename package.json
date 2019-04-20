@@ -8,12 +8,13 @@
         "overview",
         "stc"
     ],
-    "version": "0.0.139",
+    "version": "0.0.140",
     "icon": "resources/stc-deko-icon.png",
     "publisher": "guillaumeisabelle",
     "engines": {
         "vscode": "^1.5.0"
     },
+    "license": "SEE LICENSE IN LICENSE.md",
     "repository": "https://github.com/GuillaumeIsabelleX/deko-tree-overviewing",
     "scripts": {
         "test": "qunit -c utils.js -t test/tests.js",
