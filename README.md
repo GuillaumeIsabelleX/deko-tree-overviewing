@@ -10,7 +10,6 @@ ext install GuillaumeIsabelle.deko-tree-overviewing
 * Present a structural overview of the dekorator used in the code.  See [gixdeko-comments]()
 
 
-[gixdeko-comments]:https://marketplace.visualstudio.com/items?itemName=GuillaumeIsabelle.gixdeko-comments
 
 
 ## Supported Tags ##
@@ -19,9 +18,15 @@ ext install GuillaumeIsabelle.deko-tree-overviewing
 * @mc
 * @startmc
 * @startuml
+* @s
+* @cr
 
 
 
+# Related
+
+## gixdeko-comments
+* https://marketplace.visualstudio.com/items?itemName=GuillaumeIsabelle.gixdeko-comments
 
 
 
