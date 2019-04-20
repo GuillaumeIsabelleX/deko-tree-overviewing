@@ -1,3 +1,6 @@
+# v0.0.145 - 2019-04-20
+- fix: dependencies
+
 # v0.0.144 - 2019-04-20
 - fix: Bug vscode Uri
 
