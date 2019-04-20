@@ -583,14 +583,19 @@ function activate( context )
 
                 tags.map( function( tag )
                 {
-                    customHighlight[ tag ] = {};
-                    if( icons[ tag ] !== undefined )
-                    {
-                        customHighlight[ tag ].icon = icons[ tag ];
-                    }
-                    if( iconColours[ tag ] !== undefined )
-                    {
-                        customHighlight[ tag ].foreground = iconColours[ tag ];
+                    try {
+                        customHighlight[ tag ] = {};
+                        if( icons[ tag ] !== undefined )
+                        {
+                            customHighlight[ tag ].icon = icons[ tag ];
+                        }
+                        if( iconColours[ tag ] !== undefined )
+                        {
+                            customHighlight[ tag ].foreground = iconColours[ tag ];
+                        }
+                        
+                    } catch (error) {
+                        console.log(error);
                     }
                 } );
 
