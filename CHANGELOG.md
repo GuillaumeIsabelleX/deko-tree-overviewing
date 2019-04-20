@@ -1,3 +1,6 @@
+# v0.0.141 - 2019-04-20
+- fix: circleci publish cmd
+
 # v0.0.140 - 2019-04-20
 - added: LICENSE
 
