@@ -642,6 +642,7 @@ function activate( context )
 
         function showInTree( uri )
         {
+            console.log("TESTING:: function showInTree( uri )");
             if( vscode.workspace.getConfiguration( 'deko-tree' ).trackFile === true )
             {
                 provider.getElement( uri.fsPath, function( element )
@@ -748,7 +749,7 @@ function activate( context )
                     {
                         if( selectedDocument !== e.document.fileName )
                         {
-                            setTimeout( showInTree, 500, e.document.uri );
+                            setTimeout( showInTree, 800, e.document.uri );
                         }
                         selectedDocument = undefined;
                     }
