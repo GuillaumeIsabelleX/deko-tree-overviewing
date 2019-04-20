@@ -1,3 +1,9 @@
+# v0.0.139 - 2019-04-20
+- added: release publish scripts
+
+# v0.0.138 - 2019-04-20
+- Added circleci build system
+
 # v0.0.137 - 2019-02-02
 - Added couples of elements
 
