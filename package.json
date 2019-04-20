@@ -404,12 +404,10 @@
         "publisherDisplayName": "Gruntfuggly"
     },
     "dependencies": {
-        "child_process": "^1.0.2",
         "comment-patterns": "^0.10.1",
         "micromatch": "^3.1.10",
         "minimatch": "^3.0.4",
-        "octicons": "^7.4.0",
-        "supports-color": "^6.1.0"
+        "octicons": "^7.4.0"
     },
     "devDependencies": {
         "vscode": "^1.1.26",
