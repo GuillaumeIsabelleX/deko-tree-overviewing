@@ -30,6 +30,7 @@ jobs:
 
 
       - run: yarn install
+      - run: yarn install --dev
 
      
       # run tests!
