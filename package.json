@@ -220,7 +220,7 @@
             "properties": {
                 "deko-tree.regex": {
                     "type": "string",
-                    "default": "((//|#|<!--|;|/\\*|^)\\s*($TAGS)|^\\s*- \\[ \\])",
+                    "default": "((//|#|<!--|--|;|/\\*|^)\\s*($TAGS)|^\\s*- \\[ \\])",
                     "markdownDescription": "Regular expression for matching DEKOs. Note: $TAGS will be replaced by the tag list"
                 },
                 "deko-tree.tags": {

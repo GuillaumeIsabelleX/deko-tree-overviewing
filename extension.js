@@ -170,6 +170,7 @@ function activate( context )
         vscode.workspace.getConfiguration( 'deko-tree' ).update( 'statusBar', newSetting, true );
     }
 
+    //@cr Does this removes markdown file from being scanned?
     function removeFileFromSearchResults( filename )
     {
         searchResults = searchResults.filter( match =>
@@ -188,7 +189,7 @@ function activate( context )
             }
         }
 
-        debug( "Searching " + options.filename + "..." );
+        //debug( "Searching " + options.filename + "..." );
 
         ripgrep.search( "/", options ).then( matches =>
         {

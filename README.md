@@ -2,7 +2,7 @@
 
 # Intentions
 
-* A hierarchical sortable perspective of various structural content from project/solution.
+* --//@v A hierarchical sortable perspective of various structural content from project/solution.
 * Facilitated navigation to goals/observation/issues/bugs into code and documentation.
 
 ----
