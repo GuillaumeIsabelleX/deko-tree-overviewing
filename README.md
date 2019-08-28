@@ -1,5 +1,12 @@
 # STC Deko Tree
 
+# Intentions
+
+* A hierarchical sortable perspective of various structural content from project/solution.
+* Facilitated navigation to goals/observation/issues/bugs into code and documentation.
+
+----
+
 ## Installing ##
  * Open the [GuillaumeIsabelle.deko-tree-overviewing]() VS Extension 
 ```sh
