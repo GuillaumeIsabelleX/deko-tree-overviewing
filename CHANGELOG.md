@@ -2,6 +2,8 @@
 * --@issue desired fix: Markdown file being scanned
 
 # v0.0.151 - 2019-08-27 
+* doc: minor
+* fix: markdown pattern --
 * fix: URL in config
 
 # v0.0.146-150 - 2019-04-20
