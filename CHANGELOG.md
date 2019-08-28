@@ -1,4 +1,10 @@
-# v0.0.146-149 - 2019-04-20
+# v0.0.x - 2019-08-27 
+* --@issue desired fix: Markdown file being scanned
+
+# v0.0.151 - 2019-08-27 
+* fix: URL in config
+
+# v0.0.146-150 - 2019-04-20
 - fix: doc link
 
 # v0.0.145 - 2019-04-20

@@ -338,12 +338,12 @@
                 "deko-tree.defaultHighlight": {
                     "type": "object",
                     "default": {},
-                    "markdownDescription": "Default configuration for highlighting. [Read more...](https://github.com/Gruntfuggly/deko-tree#highlighting)"
+                    "markdownDescription": "Default configuration for highlighting. [Read more...](https://github.com/GuillaumeIsabelleX/deko-tree-overviewing)"
                 },
                 "deko-tree.customHighlight": {
                     "type": "object",
                     "default": {},
-                    "markdownDescription": "Custom configuration for highlighting, [Read more...](https://github.com/Gruntfuggly/deko-tree#highlighting)"
+                    "markdownDescription": "Custom configuration for highlighting, [Read more...](https://github.com/GuillaumeIsabelleX/deko-tree-overviewing)"
                 },
                 "deko-tree.sortTagsOnlyViewAlphabetically": {
                     "type": "boolean",
