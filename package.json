@@ -8,7 +8,7 @@
         "overview",
         "stc"
     ],
-    "version": "0.0.151",
+    "version": "0.0.152",
     "icon": "resources/stc-deko-icon.png",
     "publisher": "guillaumeisabelle",
     "engines": {
@@ -228,6 +228,9 @@
                     "default": [
                         "@v",
                         "@V",
+                        "@STCHyp",
+                        "@STCGoal",
+                        "@STCIssue",
                         "@mc",
                         "@a",
                         "@A",
@@ -241,7 +244,9 @@
                         "@intent",
                         "@purpose",
                         "@but",
-                        "@s",
+                        "@sta",
+                        "@state",
+                        "@status",
                         "@cr",
                         "@CR",
                         "@goal",
